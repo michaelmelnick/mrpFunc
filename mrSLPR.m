@@ -48,6 +48,8 @@ for i = 1:length(roiDir)
        roiFiles{end+1} = roiTemp{i}; 
     end
 end
+%Add a no roi blank option
+roiFiles{end+1} = [''];
 %Run  gui 
 
 if ieNotDefined('stimParams')
