@@ -35,7 +35,19 @@ else
   groupName = putOnTopOfList(groupName,viewGet(view,'groupNames'));
 end
 
+%get the ROI names
 
+roiDir = dir('ROIs');
+roiFiles = {};
+%Convert from struct
+for i = 1:length(roiDir)
+    if ~roiDir(i).isdir
+        roiTemp{i} = roiDir(i).name;
+    end
+    if exist('roiTemp', 'var') && ~isempty(roiTemp{i})
+       roiFiles{end+1} = roiTemp{i}; 
+    end
+end
 %Run  gui 
 
 if ieNotDefined('stimParams')
@@ -44,7 +56,7 @@ if ieNotDefined('stimParams')
     slprParams{end+1} = {'groupName',groupName,'Name of group from which to do eventRelated analysis'};
     slprParams{end+1} = {'scanNum',scanNum,'minmax=[1 inf]','incdec=[-1 1]','Which scan in the group to run on'};
     slprParams{end+1} = {'saveName','SLPR','File name to try to save as'};
-    slprParams{end+1} = {'ROI',[],'Limit to ROI, leave empty to run on full scan'};
+    slprParams{end+1} = {'ROI',roiFiles,'Limit to ROI, leave empty to run on full scan'};
     slprParams{end+1} = {'xLoc',xLoc,'minmax=[-inf inf]','incdec=[-1 1]','Center of stimulus, X coordinate'};
     slprParams{end+1} = {'yLoc',yLoc,'minmax=[-inf inf]','incdec=[-1 1]','Center of stimulus, Y coordinate'};    
     slprParams{end+1} = {'radius',radius,'minmax=[0 inf]','incdec=[-1 1]','Stimulus radius'};
